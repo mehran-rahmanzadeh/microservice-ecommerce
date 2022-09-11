@@ -1,3 +1,3 @@
 register/config.json
 .idea/
-*.db
+register/test.db
