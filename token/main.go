@@ -1,1 +1,5 @@
-package token
+package main
+
+func main() {
+
+}
