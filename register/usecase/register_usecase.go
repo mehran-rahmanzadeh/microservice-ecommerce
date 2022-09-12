@@ -38,3 +38,12 @@ func (u *RegisterUsecase) RegisterUser(ctx context.Context, input *proto.Registe
 	}
 	return protoUser, nil
 }
+
+func (u RegisterUsecase) AuthenticateUser(ctx context.Context, input *proto.ValidateCredentialsInput) (*proto.Validate, error) {
+	isValid, err := u.repo.Authenticate(ctx, input)
+	if err != nil {
+		return &proto.Validate{}, status.Error(codes.InvalidArgument, err.Error())
+	}
+	protoValidate := &proto.Validate{IsValid: isValid}
+	return protoValidate, nil
+}

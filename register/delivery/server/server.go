@@ -18,3 +18,7 @@ func NewRegisterUserServer(registerUserUsecase domain.RegisterUsecase) *register
 func (s *registerUserServer) Register(ctx context.Context, input *proto.RegisterInput) (*proto.User, error) {
 	return s.registerUsecase.RegisterUser(ctx, input)
 }
+
+func (s *registerUserServer) ValidateCredentials(ctx context.Context, input *proto.ValidateCredentialsInput) (*proto.Validate, error)  {
+	return s.registerUsecase.AuthenticateUser(ctx, input)
+}

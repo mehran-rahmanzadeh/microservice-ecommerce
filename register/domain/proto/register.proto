@@ -8,6 +8,11 @@ message RegisterInput {
     string password = 2;
 }
 
+message ValidateCredentialsInput {
+    string email = 1;
+    string password = 2;
+}
+
 message User {
     uint64 id = 1;
     string email = 2;
@@ -15,6 +20,11 @@ message User {
     string last_name = 5;
 }
 
+message Validate {
+    bool isValid = 1;
+}
+
 service UserRegister {
     rpc Register(RegisterInput) returns (User) {}
+    rpc ValidateCredentials(ValidateCredentialsInput) returns (Validate) {}
 }
