@@ -1,0 +1,14 @@
+{
+  "server": {
+    "host": "localhost",
+    "port": 50053
+  },
+  "services": {
+    "register": {
+      "url": "localhost:50051"
+    },
+    "login": {
+      "url": "localhost:50052"
+    }
+  }
+}

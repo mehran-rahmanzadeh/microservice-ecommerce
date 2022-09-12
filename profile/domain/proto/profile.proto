@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package domain;
+option go_package = "domain/proto";
+
+message ProfileInput {
+  string token = 1;
+}
+
+message Profile {
+  uint64 id = 1;
+  string email = 2;
+  string first_name = 4;
+  string last_name = 5;
+}
+
+service UserProfile {
+  rpc GetUserProfile(ProfileInput) returns (Profile) {}
+}
