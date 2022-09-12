@@ -1,6 +1,6 @@
 module github.com/mehran-rahmanzadeh/microservice-ecommerce
 
-go 1.19
+go 1.17
 
 require (
 	github.com/spf13/viper v1.13.0
