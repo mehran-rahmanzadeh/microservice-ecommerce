@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package domain;
+option go_package = "domain/proto";
+
+message LoginInput {
+  string email = 1;
+  string password = 2;
+}
+
+message TokenInput {
+  string access = 1;
+}
+
+message Token {
+  string access = 1;
+  string refresh = 2;
+}
+
+message Authentication {
+  bool isAuthenticated = 1;
+  string email = 2;
+}
+
+service UserLogin {
+  rpc Login(LoginInput) returns (Token) {}
+  rpc Authenticate(TokenInput) returns (Authentication) {}
+}

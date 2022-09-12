@@ -1,0 +1,15 @@
+{
+  "server": {
+    "host": "localhost",
+    "port": "50052"
+  },
+  "services": {
+    "register": {
+      "url": "localhost:50051"
+    }
+  },
+  "secrets": {
+    "jwt_key": "to_much_secure",
+    "jwt_lifetime": 60
+  }
+}
