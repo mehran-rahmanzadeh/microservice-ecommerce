@@ -44,7 +44,7 @@ func (r *RegisterRepository) Authenticate(ctx context.Context, input *proto.Vali
 func (r *RegisterRepository) GetUser(ctx context.Context, input *proto.GetUserInfoInput) (model.User, error) {
 	var user model.User
 	tx := r.DB.Where(&model.User{
-		Model:     gorm.Model{ID: uint(input.Id)},
+		Email: input.Email,
 	}).First(&user)
 	if tx.Error != nil {
 		return model.User{}, tx.Error

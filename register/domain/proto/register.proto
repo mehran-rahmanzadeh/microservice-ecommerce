@@ -14,7 +14,7 @@ message ValidateCredentialsInput {
 }
 
 message GetUserInfoInput {
-    uint64 id = 1;
+    string email = 1;
 }
 
 message User {
