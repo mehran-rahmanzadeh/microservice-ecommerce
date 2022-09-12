@@ -22,3 +22,7 @@ func (s *registerUserServer) Register(ctx context.Context, input *proto.Register
 func (s *registerUserServer) ValidateCredentials(ctx context.Context, input *proto.ValidateCredentialsInput) (*proto.Validate, error)  {
 	return s.registerUsecase.AuthenticateUser(ctx, input)
 }
+
+func (s *registerUserServer) GetUserInfo(ctx context.Context, input *proto.GetUserInfoInput) (*proto.User, error)  {
+	return s.registerUsecase.GetUser(ctx, input)
+}

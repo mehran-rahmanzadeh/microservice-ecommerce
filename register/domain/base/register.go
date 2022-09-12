@@ -9,9 +9,11 @@ import (
 type RegisterRepository interface {
 	Register(ctx context.Context, input *proto.RegisterInput) (domain.User, error)
 	Authenticate(ctx context.Context, input *proto.ValidateCredentialsInput) (bool, error)
+	GetUser(ctx context.Context, input *proto.GetUserInfoInput) (domain.User, error)
 }
 
 type RegisterUsecase interface {
 	RegisterUser(ctx context.Context, input *proto.RegisterInput) (*proto.User, error)
 	AuthenticateUser(ctx context.Context, input *proto.ValidateCredentialsInput) (*proto.Validate, error)
+	GetUser(ctx context.Context, input *proto.GetUserInfoInput) (*proto.User, error)
 }

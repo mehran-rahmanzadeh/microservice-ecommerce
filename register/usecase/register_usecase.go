@@ -47,3 +47,17 @@ func (u RegisterUsecase) AuthenticateUser(ctx context.Context, input *proto.Vali
 	protoValidate := &proto.Validate{IsValid: isValid}
 	return protoValidate, nil
 }
+
+func (u RegisterUsecase) GetUser(ctx context.Context, input *proto.GetUserInfoInput) (*proto.User, error)  {
+	user, err := u.repo.GetUser(ctx, input)
+	if err != nil {
+		return &proto.User{}, status.Error(codes.NotFound, err.Error())
+	}
+	protoUser := &proto.User{
+		Id:        uint64(user.ID),
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}
+	return protoUser, nil
+}

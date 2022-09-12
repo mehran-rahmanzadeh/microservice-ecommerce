@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type UserRegisterClient interface {
 	Register(ctx context.Context, in *RegisterInput, opts ...grpc.CallOption) (*User, error)
 	ValidateCredentials(ctx context.Context, in *ValidateCredentialsInput, opts ...grpc.CallOption) (*Validate, error)
+	GetUserInfo(ctx context.Context, in *GetUserInfoInput, opts ...grpc.CallOption) (*User, error)
 }
 
 type userRegisterClient struct {
@@ -48,12 +49,22 @@ func (c *userRegisterClient) ValidateCredentials(ctx context.Context, in *Valida
 	return out, nil
 }
 
+func (c *userRegisterClient) GetUserInfo(ctx context.Context, in *GetUserInfoInput, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/domain.UserRegister/GetUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserRegisterServer is the server API for UserRegister service.
 // All implementations must embed UnimplementedUserRegisterServer
 // for forward compatibility
 type UserRegisterServer interface {
 	Register(context.Context, *RegisterInput) (*User, error)
 	ValidateCredentials(context.Context, *ValidateCredentialsInput) (*Validate, error)
+	GetUserInfo(context.Context, *GetUserInfoInput) (*User, error)
 	mustEmbedUnimplementedUserRegisterServer()
 }
 
@@ -66,6 +77,9 @@ func (UnimplementedUserRegisterServer) Register(context.Context, *RegisterInput)
 }
 func (UnimplementedUserRegisterServer) ValidateCredentials(context.Context, *ValidateCredentialsInput) (*Validate, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateCredentials not implemented")
+}
+func (UnimplementedUserRegisterServer) GetUserInfo(context.Context, *GetUserInfoInput) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfo not implemented")
 }
 func (UnimplementedUserRegisterServer) mustEmbedUnimplementedUserRegisterServer() {}
 
@@ -116,6 +130,24 @@ func _UserRegister_ValidateCredentials_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserRegister_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfoInput)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserRegisterServer).GetUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/domain.UserRegister/GetUserInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserRegisterServer).GetUserInfo(ctx, req.(*GetUserInfoInput))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserRegister_ServiceDesc is the grpc.ServiceDesc for UserRegister service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -130,6 +162,10 @@ var UserRegister_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ValidateCredentials",
 			Handler:    _UserRegister_ValidateCredentials_Handler,
+		},
+		{
+			MethodName: "GetUserInfo",
+			Handler:    _UserRegister_GetUserInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

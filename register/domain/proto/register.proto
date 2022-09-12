@@ -13,6 +13,10 @@ message ValidateCredentialsInput {
     string password = 2;
 }
 
+message GetUserInfoInput {
+    uint64 id = 1;
+}
+
 message User {
     uint64 id = 1;
     string email = 2;
@@ -27,4 +31,5 @@ message Validate {
 service UserRegister {
     rpc Register(RegisterInput) returns (User) {}
     rpc ValidateCredentials(ValidateCredentialsInput) returns (Validate) {}
+    rpc GetUserInfo(GetUserInfoInput) returns (User) {}
 }
