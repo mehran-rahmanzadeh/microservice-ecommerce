@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package domain;
+option go_package = "domain/proto";
+
+message ListAddressInput {
+  string token = 1;
+}
+
+message RetrieveDeleteAddressInput {
+  string token = 1;
+  uint64 addressId = 2;
+}
+
+message CreateUpdateAddressInput {
+  string token = 1;
+  uint64 addressId = 2;
+  string postalAddress = 3;
+  string postalCode = 4;
+}
+
+message Address {
+  uint64 id = 1;
+  uint64 userId = 2;
+  string postalAddress = 4;
+  string postalCode = 5;
+}
+
+message AddressDeleted {
+  bool success = 1;
+}
+
+service UserAddress {
+  rpc ListAddress(ListAddressInput) returns (stream Address) {}
+  rpc AddressDetail(RetrieveDeleteAddressInput) returns (Address) {}
+  rpc CreateAddress(CreateUpdateAddressInput) returns (Address) {}
+  rpc UpdateAddress(CreateUpdateAddressInput) returns (Address) {}
+  rpc DeleteAddress(RetrieveDeleteAddressInput) returns (AddressDeleted) {}
+}
