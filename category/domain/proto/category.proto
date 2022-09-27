@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package domain;
+option go_package = "domain/proto";
+
+message Category {
+  uint64 id = 1;
+  string title = 2;
+  string description = 4;
+  string image = 5;
+  repeated Category children = 6;
+}
+
+message EmptyInput {}
+
+message IDInput {
+  uint64 id = 1;
+}
+
+message SearchInput {
+  string query = 1;
+}
+
+service CategoryService {
+  rpc ListCategories(EmptyInput) returns (stream Category) {}
+  rpc GetCategory(IDInput) returns (Category) {}
+  rpc SearchCategory(SearchInput) returns (stream Category) {}
+}
