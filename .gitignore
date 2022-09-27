@@ -2,3 +2,4 @@ register/config.json
 .idea/
 register/test.db
 address/address.db
+category/category.db
